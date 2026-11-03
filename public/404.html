@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>thegoodtools</title>
+    <!--
+      GitHub Pages serves this file for any unknown path. We stash the full
+      URL and redirect to the app root; index.html restores the URL before
+      React Router boots, giving us clean deep links on a static host.
+    -->
+    <script>
+      sessionStorage.redirect = location.href
+    </script>
+    <meta http-equiv="refresh" content="0; url='/thegoodtools/'" />
+  </head>
+  <body></body>
+</html>

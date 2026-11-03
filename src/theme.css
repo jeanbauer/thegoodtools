@@ -1,0 +1,58 @@
+/*
+ * thegoodtools inc — brand tokens.
+ * Single source of truth for the visual identity. Shell and every tool
+ * consume these variables; change branding here and it applies everywhere.
+ */
+
+:root {
+  /* Typography — system stack, zero font downloads */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* Color — light */
+  --color-bg: #faf9f6;
+  --color-surface: #ffffff;
+  --color-ink: #1b1812;
+  --color-muted: #6f6a5e;
+  --color-border: #e7e3da;
+  --color-accent: #ff4d00;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #fff1ea;
+
+  /* Shape & depth */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-card:
+    0 1px 2px rgb(27 24 18 / 0.05), 0 4px 14px rgb(27 24 18 / 0.06);
+  --shadow-card-hover:
+    0 2px 4px rgb(27 24 18 / 0.07), 0 10px 28px rgb(27 24 18 / 0.1);
+
+  /* Layout */
+  --max-width: 1080px;
+  --space-page: clamp(16px, 4vw, 40px);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #14120e;
+    --color-surface: #1d1a15;
+    --color-ink: #f3efe7;
+    --color-muted: #a39c8d;
+    --color-border: #322d24;
+    --color-accent: #ff6a26;
+    --color-accent-ink: #1b0e06;
+    --color-accent-soft: #2e1a10;
+    --shadow-card:
+      0 1px 2px rgb(0 0 0 / 0.4), 0 4px 14px rgb(0 0 0 / 0.3);
+    --shadow-card-hover:
+      0 2px 4px rgb(0 0 0 / 0.45), 0 10px 28px rgb(0 0 0 / 0.4);
+
+    color-scheme: dark;
+  }
+}

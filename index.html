@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="thegoodtools — a collection of small, fast, free web utilities that just work." />
+    <meta name="theme-color" content="#ff4d00" />
+    <title>thegoodtools — small tools that just work</title>
+    <script>
+      // GitHub Pages SPA redirect: public/404.html stashes the original URL in
+      // sessionStorage and bounces here; we restore it so client-side routing
+      // sees the deep link (e.g. /thegoodtools/tools/pdf-merger).
+      ;(function () {
+        var redirect = sessionStorage.redirect
+        delete sessionStorage.redirect
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, '', redirect)
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
