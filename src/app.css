@@ -197,6 +197,7 @@ a {
   height: 40px;
   border-radius: var(--radius-md);
   background: var(--color-accent-soft);
+  color: var(--color-accent);
   display: grid;
   place-items: center;
   font-size: 20px;
@@ -322,8 +323,137 @@ a {
   margin: 0;
 }
 
-/* ---------- Not found ---------- */
+/* ---------- Shared form controls (used by tools) ---------- */
 
+.form-error {
+  margin: 0;
+  font-size: 14px;
+  color: #c22400;
+}
+
+@media (prefers-color-scheme: dark) {
+  .form-error {
+    color: #ff8a66;
+  }
+}
+
+.tbtn {
+  flex: 1;
+  min-width: 140px;
+  padding: 12px 18px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
+}
+
+.tbtn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.tbtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.tbtn-primary {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+.tbtn-primary:hover:not(:disabled) {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.tbtn-secondary {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border-color: var(--color-border);
+}
+
+.tbtn-secondary:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+}
+
+.segmented-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.segmented-field > .label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.segmented {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.segmented button {
+  flex: 1;
+  padding: 7px 4px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--color-muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.segmented button:hover {
+  color: var(--color-ink);
+}
+
+.segmented button[aria-pressed='true'] {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-card);
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 128px;
+  padding: 16px;
+  font: inherit;
+  color: var(--color-muted);
+  background: var(--color-surface);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease;
+}
+
+.dropzone:hover,
+.dropzone.dropzone-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+/* ---------- Not found ---------- */
 .not-found {
   text-align: center;
   padding: 64px 0;

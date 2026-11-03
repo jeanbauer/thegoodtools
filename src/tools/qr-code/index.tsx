@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import QRCode from 'qrcode'
+import jsQR from 'jsqr'
 import { ToolPage } from '../../shared/ToolPage'
+import { SegmentedControl } from '../../shared/SegmentedControl'
 import './qr-code.css'
 
 const CANVAS_SIZE = 1024
@@ -41,6 +43,8 @@ function roundedRectPath(
 }
 
 export default function QrCodeTool() {
+  const [mode, setMode] = useState<'create' | 'decode'>('create')
+
   const [link, setLink] = useState('')
   const [imageSrc, setImageSrc] = useState<string | null>(null)
   const [generated, setGenerated] = useState(false)
@@ -173,11 +177,144 @@ export default function QrCodeTool() {
     a.click()
   }, [])
 
+  /* ---------- decode ---------- */
+
+  const [decoded, setDecoded] = useState<string | null>(null)
+  const [decodeError, setDecodeError] = useState<string | null>(null)
+  const [decodeDrag, setDecodeDrag] = useState(false)
+  const [decodePreview, setDecodePreview] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
+  const decodeInputRef = useRef<HTMLInputElement | null>(null)
+
+  const decodeFile = useCallback((file: File | undefined | null) => {
+    if (!file) return
+    if (!file.type.startsWith('image/')) {
+      setDecodeError("That doesn't look like an image — try a PNG, JPG or screenshot.")
+      return
+    }
+    setDecodeError(null)
+    setDecoded(null)
+    setCopied(false)
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      const src = reader.result as string
+      setDecodePreview(src)
+      const img = new Image()
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.naturalWidth
+        canvas.height = img.naturalHeight
+        const ctx = canvas.getContext('2d')
+        if (!ctx) return
+        ctx.drawImage(img, 0, 0)
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        const result = jsQR(imageData.data, canvas.width, canvas.height)
+        if (result && result.data) {
+          setDecoded(result.data)
+        } else {
+          setDecodeError(
+            "Couldn't spot a QR code in there. Try a sharper, less blurry image?",
+          )
+        }
+      }
+      img.onerror = () => setDecodeError("Couldn't read that image — mind trying another?")
+      img.src = src
+    }
+    reader.readAsDataURL(file)
+  }, [])
+
+  const copyDecoded = useCallback(() => {
+    if (!decoded) return
+    void navigator.clipboard.writeText(decoded).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }, [decoded])
+
+  const decodedIsUrl = decoded ? /^[a-z][a-z0-9+.-]*:\/\//i.test(decoded) || /^mailto:|^tel:/i.test(decoded) : false
+
   return (
     <ToolPage
-      name="QR Code"
-      tagline="Point it at a link, drop your logo in the middle, done. Everything happens in your browser."
+      name="QR Code Helper"
+      tagline="Make a QR code with your logo in the middle, or upload one and find out what it says. All in your browser."
     >
+      <div className="qr-mode">
+        <SegmentedControl
+          label="What are we doing?"
+          value={mode}
+          onChange={setMode}
+          options={[
+            { value: 'create', label: 'Make a QR code' },
+            { value: 'decode', label: 'Decode one' },
+          ]}
+        />
+      </div>
+
+      {mode === 'decode' ? (
+        <div className="qr-decode">
+          <button
+            type="button"
+            className={`dropzone qr-dropzone${decodeDrag ? ' dropzone-active' : ''}`}
+            onClick={() => decodeInputRef.current?.click()}
+            onDragOver={(e) => {
+              e.preventDefault()
+              setDecodeDrag(true)
+            }}
+            onDragLeave={() => setDecodeDrag(false)}
+            onDrop={(e) => {
+              e.preventDefault()
+              setDecodeDrag(false)
+              decodeFile(e.dataTransfer.files?.[0])
+            }}
+          >
+            {decodePreview ? (
+              <>
+                <img src={decodePreview} alt="Uploaded QR code" />
+                <span className="strong">Click or drop to try another image</span>
+              </>
+            ) : (
+              <>
+                <UploadIcon />
+                <span>
+                  <span className="strong">Upload a QR code image</span> or drag &amp; drop
+                </span>
+                <small>PNG, JPG, screenshot — it never leaves your device</small>
+              </>
+            )}
+          </button>
+          <input
+            ref={decodeInputRef}
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => decodeFile(e.target.files?.[0])}
+          />
+
+          {decodeError && (
+            <p role="alert" className="form-error">
+              {decodeError}
+            </p>
+          )}
+
+          {decoded && (
+            <div className="qr-result">
+              <span className="qr-result-badge">{decodedIsUrl ? 'Link' : 'Text'}</span>
+              <p className="qr-result-text">{decoded}</p>
+              <div className="qr-actions">
+                {decodedIsUrl && (
+                  <a className="tbtn tbtn-primary qr-result-link" href={decoded} target="_blank" rel="noreferrer">
+                    Open link ↗
+                  </a>
+                )}
+                <button className="tbtn tbtn-secondary" onClick={copyDecoded}>
+                  {copied ? 'Copied!' : 'Copy it'}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
       <div className="qr-layout">
         <div className="qr-controls">
           <div className="qr-field">
@@ -198,7 +335,7 @@ export default function QrCodeTool() {
             <span className="label">Center image (optional)</span>
             <button
               type="button"
-              className={`qr-dropzone${isDragging ? ' qr-drop-active' : ''}`}
+              className={`dropzone qr-dropzone${isDragging ? ' dropzone-active' : ''}`}
               onClick={() => fileInputRef.current?.click()}
               onDragOver={(e) => {
                 e.preventDefault()
@@ -275,7 +412,7 @@ export default function QrCodeTool() {
               <SegmentedControl
                 label="Spacing to QR"
                 value={spacing}
-                onChange={(v) => setSpacing(v as Spacing)}
+                onChange={setSpacing}
                 options={[
                   { value: 'none', label: 'None' },
                   { value: 'sm', label: 'Small' },
@@ -287,7 +424,7 @@ export default function QrCodeTool() {
               <SegmentedControl
                 label="Corners"
                 value={cornerStyle}
-                onChange={(v) => setCornerStyle(v as CornerStyle)}
+                onChange={setCornerStyle}
                 options={[
                   { value: 'rounded', label: 'Rounded' },
                   { value: 'squared', label: 'Squared' },
@@ -297,17 +434,17 @@ export default function QrCodeTool() {
           ) : null}
 
           {error ? (
-            <p role="alert" className="qr-error">
+            <p role="alert" className="form-error">
               {error}
             </p>
           ) : null}
 
           <div className="qr-actions">
-            <button className="qr-btn qr-btn-primary" onClick={() => void generate()}>
+            <button className="tbtn tbtn-primary" onClick={() => void generate()}>
               Make my QR
             </button>
             <button
-              className="qr-btn qr-btn-secondary"
+              className="tbtn tbtn-secondary"
               onClick={download}
               disabled={!generated}
             >
@@ -335,39 +472,11 @@ export default function QrCodeTool() {
           <p className="qr-hint">Downloads as a crisp 1024×1024 PNG — print-ready.</p>
         </div>
       </div>
+      )}
     </ToolPage>
   )
 }
 
-function SegmentedControl({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  options: { value: string; label: string }[]
-}) {
-  return (
-    <div className="qr-field">
-      <span className="label">{label}</span>
-      <div className="qr-segmented">
-        {options.map((option) => (
-          <button
-            key={option.value}
-            type="button"
-            aria-pressed={option.value === value}
-            onClick={() => onChange(option.value)}
-          >
-            {option.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  )
-}
 
 function UploadIcon() {
   return (

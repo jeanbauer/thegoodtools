@@ -1,0 +1,247 @@
+/*
+ * PDF Split & Merge tool — scoped styles. Shared controls (buttons,
+ * segmented, dropzone, errors) live in app.css.
+ */
+
+.pdf-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 720px;
+}
+
+.pdf-mode {
+  max-width: 320px;
+}
+
+.pdf-dropzone {
+  min-height: 180px;
+}
+
+.pdf-dropzone .big {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* File chip / list */
+
+.pdf-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.pdf-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pdf-file-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.pdf-file-icon {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.pdf-file-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pdf-file-sub {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.pdf-link-btn {
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.pdf-link-btn:hover {
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+/* Split: page picker */
+
+.pdf-pages-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pdf-pages-head h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.pdf-count-pill {
+  flex: none;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  border-radius: 999px;
+}
+
+.pdf-pages-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.pdf-pages {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 8px;
+}
+
+.pdf-page {
+  aspect-ratio: 3 / 4;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-muted);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.pdf-page:hover {
+  border-color: var(--color-accent);
+  color: var(--color-ink);
+}
+
+.pdf-page[aria-pressed='true'] {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Merge: ordered file list */
+
+.pdf-merge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pdf-merge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.pdf-merge-order {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+  border-radius: 50%;
+}
+
+.pdf-merge-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.pdf-merge-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.pdf-icon-btn {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  font: inherit;
+  font-size: 13px;
+  color: var(--color-muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.pdf-icon-btn:hover:not(:disabled) {
+  color: var(--color-ink);
+  background: var(--color-surface);
+}
+
+.pdf-icon-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Actions row */
+
+.pdf-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pdf-success {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.pdf-local-note {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-muted);
+}
