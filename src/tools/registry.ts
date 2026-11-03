@@ -30,14 +30,14 @@ export interface RegisteredTool extends ToolDefinition {
 }
 
 const definitions: ToolDefinition[] = [
-  // Example — the first real tool will look like this:
-  // {
-  //   id: 'qr-code',
-  //   name: 'QR Code',
-  //   tagline: 'Create QR codes or decode one from an image.',
-  //   icon: '🔳',
-  //   load: () => import('./qr-code'),
-  // },
+  {
+    id: 'qr-code',
+    name: 'QR Code',
+    tagline: 'Point it at a link, drop your logo in the middle, done.',
+    icon: '🔳',
+    load: () => import('./qr-code'),
+  },
+  // Add the next tool here — folder + entry, that's the whole ritual.
 ]
 
 export const tools: RegisteredTool[] = definitions.map((definition) => ({

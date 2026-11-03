@@ -1,0 +1,303 @@
+/*
+ * QR Code tool — scoped styles. Everything consumes shell theme tokens.
+ * This file is only loaded with the tool's lazy chunk.
+ */
+
+.qr-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .qr-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.qr-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.qr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.qr-field > label,
+.qr-field > .label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.qr-hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.qr-input {
+  height: 48px;
+  padding: 0 14px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.qr-input::placeholder {
+  color: var(--color-muted);
+  opacity: 0.7;
+}
+
+.qr-input:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+/* Dropzone */
+
+.qr-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 128px;
+  padding: 16px;
+  font: inherit;
+  color: var(--color-muted);
+  background: var(--color-surface);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease;
+}
+
+.qr-drop-active,
+.qr-dropzone:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.qr-dropzone img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.qr-dropzone .strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.qr-dropzone small {
+  font-size: 12px;
+}
+
+/* Image adjustment panel */
+
+.qr-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.qr-slider-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.qr-slider-head output {
+  font-size: 12px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-muted);
+}
+
+.qr-range {
+  width: 100%;
+  height: 6px;
+  appearance: none;
+  border-radius: 999px;
+  background: var(--color-border);
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+/* Segmented control */
+
+.qr-segmented {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.qr-segmented button {
+  flex: 1;
+  padding: 7px 4px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--color-muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.qr-segmented button:hover {
+  color: var(--color-ink);
+}
+
+.qr-segmented button[aria-pressed='true'] {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-card);
+}
+
+/* Actions */
+
+.qr-error {
+  margin: 0;
+  font-size: 14px;
+  color: #c22400;
+}
+
+@media (prefers-color-scheme: dark) {
+  .qr-error {
+    color: #ff8a66;
+  }
+}
+
+.qr-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.qr-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 12px 18px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
+}
+
+.qr-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.qr-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.qr-btn-primary {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+.qr-btn-primary:hover:not(:disabled) {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.qr-btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border-color: var(--color-border);
+}
+
+.qr-btn-secondary:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+}
+
+/* Preview */
+
+.qr-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+@media (min-width: 761px) {
+  .qr-preview {
+    position: sticky;
+    top: 88px;
+  }
+}
+
+.qr-preview-frame {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1;
+  padding: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.qr-preview-frame canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-sm);
+}
+
+.qr-preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 14px;
+  max-width: 220px;
+}
+
+.qr-success {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-accent);
+}

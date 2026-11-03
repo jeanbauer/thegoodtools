@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>thegoodtools — brand board v1</title>
+<style>
+  :root {
+    --font: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --ink: #1b1812;
+    --muted: #6f6a5e;
+    --bg: #f4f2ec;
+    --surface: #ffffff;
+    --border: #e3dfd5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 48px 24px 96px; }
+  header.board { margin-bottom: 48px; }
+  header.board h1 { font-size: 28px; letter-spacing: -0.02em; margin: 0 0 6px; }
+  header.board p { margin: 0; color: var(--muted); max-width: 60ch; }
+  h2.section {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); margin: 64px 0 20px; border-top: 1px solid var(--border); padding-top: 24px;
+  }
+
+  /* ---- directions ---- */
+  .directions { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+  .direction {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+  }
+  .direction .d-head { padding: 20px 20px 0; }
+  .direction h3 { margin: 0 0 2px; font-size: 17px; letter-spacing: -0.01em; }
+  .direction .d-note { margin: 0 0 16px; font-size: 13px; color: var(--muted); }
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; padding: 0 20px 16px; }
+  .swatch { border-radius: 8px; height: 44px; border: 1px solid rgb(0 0 0 / 0.08); position: relative; }
+  .swatch span {
+    position: absolute; left: 6px; bottom: 4px; font-size: 9px; font-family: var(--mono);
+    color: inherit; opacity: 0.75;
+  }
+  .d-preview { padding: 20px; border-top: 1px solid var(--border); }
+  .wordmark { font-weight: 800; font-size: 26px; letter-spacing: -0.03em; margin-bottom: 16px; }
+  .mini-card {
+    border-radius: 12px; padding: 14px 16px; border: 1px solid;
+    display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+  }
+  .mini-card .ic {
+    width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; font-size: 17px; flex: none;
+  }
+  .mini-card b { font-size: 14px; display: block; }
+  .mini-card small { font-size: 12px; opacity: 0.7; }
+  .btn {
+    display: inline-block; border: 0; border-radius: 9px; padding: 9px 16px;
+    font: 600 14px var(--font); cursor: pointer;
+  }
+  .contrast { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 11.5px; font-family: var(--mono); }
+  .contrast td, .contrast th { text-align: left; padding: 3px 0; color: var(--muted); }
+  .contrast td:last-child, .contrast th:last-child { text-align: right; }
+  .pass { color: #1a7f37; font-weight: 700; }
+  .fail { color: #c00; font-weight: 700; }
+  .aa { opacity: 0.65; }
+
+  /* ---- logo marks ---- */
+  .marks { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .mark-cell {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    padding: 20px; text-align: center;
+  }
+  .mark-cell h4 { margin: 14px 0 4px; font-size: 14px; }
+  .mark-cell p { margin: 0; font-size: 12px; color: var(--muted); }
+  .mark-row { display: flex; align-items: flex-end; justify-content: center; gap: 18px; min-height: 72px; }
+  .sq { display: grid; place-items: center; font-weight: 800; line-height: 1; color: #fff; }
+  .favicon-sim { display: inline-flex; gap: 10px; justify-content: center; margin-top: 12px; align-items: center; }
+  .favicon-sim img, .favicon-sim div { image-rendering: auto; }
+  .size16 { width: 16px; height: 16px; } .size32 { width: 32px; height: 32px; } .size64 { width: 64px; height: 64px; }
+
+  /* ---- type ---- */
+  .type-spec { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+  .type-spec .row { padding: 10px 0; border-bottom: 1px dashed var(--border); }
+  .type-spec .row:last-child { border-bottom: 0; }
+  .type-spec .meta { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+
+  /* ---- voice ---- */
+  .voice { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .voice-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+  .voice-card h4 { margin: 0 0 10px; font-size: 14px; }
+  .voice-card blockquote {
+    margin: 0 0 10px; padding: 10px 14px; border-radius: 10px;
+    background: var(--bg); font-size: 14px;
+  }
+  .voice-card .who { font-size: 11px; font-family: var(--mono); color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="board">
+    <h1>thegoodtools — brand board <span style="font-weight:400;color:var(--muted)">v1</span></h1>
+    <p>Brief: warm &amp; playful, friendly and a bit cheeky, approachable for non-techies.
+       Wordmark + simple 't' mark. System fonts only. Three color directions compared
+       against the current safety orange, with real WCAG contrast numbers.</p>
+  </header>
+
+  <h2 class="section">1 — Color directions</h2>
+  <div class="directions" id="directions"></div>
+
+  <h2 class="section">2 — The mark (16 / 32 / 64 px)</h2>
+  <div class="marks">
+    <div class="mark-cell">
+      <div class="mark-row">
+        <div class="sq size16" style="background:#ff4d00;border-radius:4px;font-size:10px">t</div>
+        <div class="sq size32" style="background:#ff4d00;border-radius:8px;font-size:19px">t</div>
+        <div class="sq size64" style="background:#ff4d00;border-radius:15px;font-size:38px">t</div>
+      </div>
+      <h4>A — current, refined</h4>
+      <p>Rounded square, tight 't'. Honest, sturdy.</p>
+    </div>
+    <div class="mark-cell">
+      <div class="mark-row">
+        <div class="sq size16" style="background:#ff4d00;border-radius:50%;font-size:10px">t</div>
+        <div class="sq size32" style="background:#ff4d00;border-radius:50%;font-size:19px">t</div>
+        <div class="sq size64" style="background:#ff4d00;border-radius:50%;font-size:38px">t</div>
+      </div>
+      <h4>B — circle</h4>
+      <p>Softer, friendlier. Reads as a button/sticker.</p>
+    </div>
+    <div class="mark-cell">
+      <div class="mark-row">
+        <div class="sq size16" style="background:#ff4d00;border-radius:5px;font-size:9px;transform:rotate(-6deg)">t.</div>
+        <div class="sq size32" style="background:#ff4d00;border-radius:9px;font-size:18px;transform:rotate(-6deg)">t.</div>
+        <div class="sq size64" style="background:#ff4d00;border-radius:16px;font-size:36px;transform:rotate(-6deg)">t.</div>
+      </div>
+      <h4>C — tilted 't.'</h4>
+      <p>Cheeky sticker energy. The dot echoes the wordmark.</p>
+    </div>
+    <div class="mark-cell">
+      <div class="mark-row">
+        <div class="sq size16" style="background:#1b1812;color:#ff4d00;border-radius:4px;font-size:10px">t</div>
+        <div class="sq size32" style="background:#1b1812;color:#ff4d00;border-radius:8px;font-size:19px">t</div>
+        <div class="sq size64" style="background:#1b1812;color:#ff4d00;border-radius:15px;font-size:38px">t</div>
+      </div>
+      <h4>D — inverted</h4>
+      <p>Ink tile, accent glyph. Strong on light surfaces.</p>
+    </div>
+  </div>
+
+  <h2 class="section">3 — Typography (system stack)</h2>
+  <div class="type-spec">
+    <div class="row"><div class="meta">display / 800 / -0.03em</div><div style="font-size:40px;font-weight:800;letter-spacing:-0.03em">Small tools that just work.</div></div>
+    <div class="row"><div class="meta">page title / 800 / -0.02em</div><div style="font-size:28px;font-weight:800;letter-spacing:-0.02em">QR Code</div></div>
+    <div class="row"><div class="meta">card title / 700 / 16px</div><div style="font-size:16px;font-weight:700">PDF Merger</div></div>
+    <div class="row"><div class="meta">body / 400 / 15px</div><div style="font-size:15px">Drop your files here. They never leave your browser — the merging happens on your machine.</div></div>
+    <div class="row"><div class="meta">mono accent / 13px</div><div style="font-family:var(--mono);font-size:13px">550e8400-e29b-41d4-a716-446655440000</div></div>
+  </div>
+
+  <h2 class="section">4 — Voice (draft copy)</h2>
+  <div class="voice">
+    <div class="voice-card">
+      <h4>Taglines</h4>
+      <blockquote>Small tools that just work.</blockquote>
+      <blockquote>Good tools. No nonsense.</blockquote>
+      <blockquote>The good kind of toolbox.</blockquote>
+      <span class="who">hero / footer</span>
+    </div>
+    <div class="voice-card">
+      <h4>Empty &amp; loading states</h4>
+      <blockquote>Nothing here yet — drop a file to get going.</blockquote>
+      <blockquote>Working on it… (locally, don't worry)</blockquote>
+      <span class="who">tools</span>
+    </div>
+    <div class="voice-card">
+      <h4>Buttons &amp; results</h4>
+      <blockquote>Merge 'em · Make my QR · Split it</blockquote>
+      <blockquote>Done! Your file is ready ↓</blockquote>
+      <span class="who">actions — contractions welcome</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ---------- contrast ----------
+function lum(hex) {
+  const c = hex.replace('#', '');
+  const [r, g, b] = [0, 2, 4].map(i => {
+    const v = parseInt(c.slice(i, i + 2), 16) / 255;
+    return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+function ratio(a, b) {
+  const [l1, l2] = [lum(a), lum(b)].sort((x, y) => y - x);
+  return (l1 + 0.05) / (l2 + 0.05);
+}
+function badge(r) {
+  const cls = r >= 4.5 ? 'pass' : r >= 3 ? 'aa' : 'fail';
+  const label = r >= 4.5 ? 'AA ✓' : r >= 3 ? 'AA-large' : 'fail';
+  return `<td class="${cls}">${r.toFixed(2)} ${label}</td>`;
+}
+
+// ---------- directions ----------
+const directions = [
+  {
+    name: 'A — Safety Orange (chosen)',
+    note: 'Workshop orange. Energetic, tool-native, a little loud.',
+    bg: '#faf9f6', surface: '#ffffff', ink: '#1b1812',
+    muted: '#6f6a5e', border: '#e7e3da', accent: '#ff4d00',
+    accentInk: '#ffffff', soft: '#fff1ea',
+  },
+  // Explored and set aside — keeping Safety Orange:
+  // {
+  //   name: 'B — Coral Punch',
+  //   note: 'Pinker and softer. Friendlier, more playful, less "hardware store".',
+  //   bg: '#fdf8f6', surface: '#ffffff', ink: '#221514',
+  //   muted: '#7d6660', border: '#f0ddd7', accent: '#f04438',
+  //   accentInk: '#ffffff', soft: '#ffeceb',
+  // },
+  // {
+  //   name: 'C — Sunny Amber',
+  //   note: 'Highlighter yellow-amber, dark text on accent. Maximum cheer, watch contrast.',
+  //   bg: '#fdfaf2', surface: '#ffffff', ink: '#201a08',
+  //   muted: '#7a6f52', border: '#ece2c8', accent: '#ffb020',
+  //   accentInk: '#2a1d00', soft: '#fff3d9',
+  // },
+];
+
+const labels = ['bg', 'surface', 'ink', 'muted', 'border', 'accent'];
+const host = document.getElementById('directions');
+host.innerHTML = directions.map(d => `
+  <div class="direction">
+    <div class="d-head">
+      <h3>${d.name}</h3>
+      <p class="d-note">${d.note}</p>
+    </div>
+    <div class="swatches">
+      ${labels.map(k => `<div class="swatch" style="background:${d[k]};color:${k === 'bg' || k === 'surface' || k === 'border' ? d.ink : d.bg}"><span>${k}</span></div>`).join('')}
+    </div>
+    <div class="d-preview" style="background:${d.bg}">
+      <div class="wordmark" style="color:${d.ink}">thegoodtools<span style="color:${d.accent}">.</span></div>
+      <div class="mini-card" style="background:${d.surface};border-color:${d.border}">
+        <div class="ic" style="background:${d.soft}">🔳</div>
+        <div>
+          <b style="color:${d.ink}">QR Code</b>
+          <small style="color:${d.muted}">Make one, or decode one you have.</small>
+        </div>
+      </div>
+      <button class="btn" style="background:${d.accent};color:${d.accentInk}">Make my QR</button>
+      <table class="contrast">
+        <tr><td>ink on bg</td>${badge(ratio(d.ink, d.bg))}</tr>
+        <tr><td>muted on bg</td>${badge(ratio(d.muted, d.bg))}</tr>
+        <tr><td>accent on bg</td>${badge(ratio(d.accent, d.bg))}</tr>
+        <tr><td>accent-ink on accent</td>${badge(ratio(d.accentInk, d.accent))}</tr>
+      </table>
+    </div>
+  </div>
+`).join('');
+</script>
+</body>
+</html>
