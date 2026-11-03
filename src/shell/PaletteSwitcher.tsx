@@ -9,6 +9,10 @@ const palettes = [
   { id: 'orange', label: 'Safety Orange', color: '#ff4d00' },
   { id: 'coral', label: 'Coral Punch', color: '#f04438' },
   { id: 'amber', label: 'Sunny Amber', color: '#ffb020' },
+  { id: 'spearmint', label: 'Spearmint', color: '#0e9f6e' },
+  { id: 'lilac', label: 'Lilac', color: '#7c3aed' },
+  { id: 'ocean', label: 'Ocean', color: '#2563eb' },
+  { id: 'mono', label: 'Mono Ink', color: '#1b1812' },
 ] as const
 
 type PaletteId = (typeof palettes)[number]['id']

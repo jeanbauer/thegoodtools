@@ -86,6 +86,50 @@
   --color-accent-soft: #fff3d9;
 }
 
+[data-palette='spearmint'] {
+  --color-bg: #f1f8f4;
+  --color-surface: #ffffff;
+  --color-ink: #12211a;
+  --color-muted: #5f7268;
+  --color-border: #d9eadf;
+  --color-accent: #0e9f6e;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #e0f4ea;
+}
+
+[data-palette='lilac'] {
+  --color-bg: #f8f5fc;
+  --color-surface: #ffffff;
+  --color-ink: #1f1830;
+  --color-muted: #6f6684;
+  --color-border: #e6def2;
+  --color-accent: #7c3aed;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #efe7fb;
+}
+
+[data-palette='ocean'] {
+  --color-bg: #f2f6fa;
+  --color-surface: #ffffff;
+  --color-ink: #131c26;
+  --color-muted: #5d6d7e;
+  --color-border: #dbe5ee;
+  --color-accent: #2563eb;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #e5eefa;
+}
+
+[data-palette='mono'] {
+  --color-bg: #fbfaf8;
+  --color-surface: #ffffff;
+  --color-ink: #1b1812;
+  --color-muted: #6f6a5e;
+  --color-border: #e7e3da;
+  --color-accent: #1b1812;
+  --color-accent-ink: #fbfaf8;
+  --color-accent-soft: #f0ede6;
+}
+
 @media (prefers-color-scheme: dark) {
   [data-palette='coral'] {
     --color-bg: #181110;
@@ -107,5 +151,49 @@
     --color-accent: #ffb020;
     --color-accent-ink: #2a1d00;
     --color-accent-soft: #2e2410;
+  }
+
+  [data-palette='spearmint'] {
+    --color-bg: #0f1613;
+    --color-surface: #16211c;
+    --color-ink: #e9f2ec;
+    --color-muted: #93a89c;
+    --color-border: #27352e;
+    --color-accent: #34d399;
+    --color-accent-ink: #06251a;
+    --color-accent-soft: #14281f;
+  }
+
+  [data-palette='lilac'] {
+    --color-bg: #15121e;
+    --color-surface: #1e1929;
+    --color-ink: #efeaf7;
+    --color-muted: #a89fbe;
+    --color-border: #342d45;
+    --color-accent: #a78bfa;
+    --color-accent-ink: #1e1240;
+    --color-accent-soft: #251c38;
+  }
+
+  [data-palette='ocean'] {
+    --color-bg: #10141a;
+    --color-surface: #18202a;
+    --color-ink: #e8eef5;
+    --color-muted: #93a3b5;
+    --color-border: #28343f;
+    --color-accent: #60a5fa;
+    --color-accent-ink: #0a1a33;
+    --color-accent-soft: #16222f;
+  }
+
+  [data-palette='mono'] {
+    --color-bg: #14120e;
+    --color-surface: #1d1a15;
+    --color-ink: #f3efe7;
+    --color-muted: #a39c8d;
+    --color-border: #322d24;
+    --color-accent: #f3efe7;
+    --color-accent-ink: #14120e;
+    --color-accent-soft: #26221b;
   }
 }
