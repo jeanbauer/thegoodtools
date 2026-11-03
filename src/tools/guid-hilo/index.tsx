@@ -1,24 +1,8 @@
 import { useState } from 'react'
 import { ToolPage } from '../../shared/ToolPage'
+import { CopyButton } from '../../shared/CopyButton'
 import { guidToHiLo, hiLoToGuid, parseInt64 } from './guid-hilo'
 import './guid-hilo.css'
-
-function CopyButton({ value }: { value: string }) {
-  const [copied, setCopied] = useState(false)
-  return (
-    <button
-      className="guid-copy"
-      onClick={() => {
-        void navigator.clipboard.writeText(value).then(() => {
-          setCopied(true)
-          setTimeout(() => setCopied(false), 2000)
-        })
-      }}
-    >
-      {copied ? 'Copied!' : 'Copy'}
-    </button>
-  )
-}
 
 export default function GuidHiloTool() {
   const [guidInput, setGuidInput] = useState('')

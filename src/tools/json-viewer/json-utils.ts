@@ -106,3 +106,84 @@ export function resetExpansion(root: JsonNode, startCollapsed: boolean): JsonNod
   })
   return walk(root)
 }
+
+/* ---------- validation & diffing (format/validate/compare modes) ----- */
+
+export interface ValidationResult {
+  ok: boolean
+  message?: string
+  topType?: JsonType
+  bytes?: number
+}
+
+export function validateJson(input: string): ValidationResult {
+  if (!input.trim()) return { ok: false, message: 'Nothing to check yet.' }
+  try {
+    const parsed = JSON.parse(input) as unknown
+    return { ok: true, topType: typeOf(parsed), bytes: new Blob([input]).size }
+  } catch (e) {
+    // V8 messages include position/line info — surface them when present.
+    return { ok: false, message: e instanceof Error ? e.message : 'Invalid JSON' }
+  }
+}
+
+export interface DiffEntry {
+  path: string
+  kind: 'added' | 'removed' | 'changed' | 'retyped'
+  left?: string
+  right?: string
+}
+
+const DIFF_LIMIT = 200
+
+function preview(value: unknown): string {
+  const s = JSON.stringify(value)
+  if (s === undefined) return String(value)
+  return s.length > 60 ? `${s.slice(0, 60)}…` : s
+}
+
+/** Structural diff of two parsed JSON values. Capped at DIFF_LIMIT entries. */
+export function diffJson(a: unknown, b: unknown): DiffEntry[] {
+  const out: DiffEntry[] = []
+
+  const walk = (left: unknown, right: unknown, path: string) => {
+    if (out.length >= DIFF_LIMIT) return
+    const lt = typeOf(left)
+    const rt = typeOf(right)
+    if (lt !== rt) {
+      out.push({ path, kind: 'retyped', left: preview(left), right: preview(right) })
+      return
+    }
+    if (lt === 'object') {
+      const lo = left as Record<string, unknown>
+      const ro = right as Record<string, unknown>
+      for (const key of new Set([...Object.keys(lo), ...Object.keys(ro)])) {
+        if (out.length >= DIFF_LIMIT) return
+        const childPath = `${path}.${key}`
+        if (!(key in lo)) out.push({ path: childPath, kind: 'added', right: preview(ro[key]) })
+        else if (!(key in ro)) out.push({ path: childPath, kind: 'removed', left: preview(lo[key]) })
+        else walk(lo[key], ro[key], childPath)
+      }
+      return
+    }
+    if (lt === 'array') {
+      const la = left as unknown[]
+      const ra = right as unknown[]
+      const max = Math.max(la.length, ra.length)
+      for (let i = 0; i < max; i++) {
+        if (out.length >= DIFF_LIMIT) return
+        const childPath = `${path}[${i}]`
+        if (i >= la.length) out.push({ path: childPath, kind: 'added', right: preview(ra[i]) })
+        else if (i >= ra.length) out.push({ path: childPath, kind: 'removed', left: preview(la[i]) })
+        else walk(la[i], ra[i], childPath)
+      }
+      return
+    }
+    if (left !== right) {
+      out.push({ path, kind: 'changed', left: preview(left), right: preview(right) })
+    }
+  }
+
+  walk(a, b, '$')
+  return out
+}
