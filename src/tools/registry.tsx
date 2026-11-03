@@ -58,6 +58,13 @@ const definitions: ToolDefinition[] = [
     icon: '🔄',
     load: () => import('./guid-hilo'),
   },
+  {
+    id: 'json-viewer',
+    name: 'Show Me That JSON',
+    tagline: 'Paste JSON and Jason shows you what\u2019s inside — tree or flow chart.',
+    icon: '{ }',
+    load: () => import('./json-viewer'),
+  },
   // Add the next tool here — folder + entry, that's the whole ritual.
 ]
 
