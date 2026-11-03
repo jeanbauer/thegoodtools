@@ -379,7 +379,7 @@ export default function PdfSplitMerge() {
         )}
         {success && <p className="pdf-success">{success}</p>}
         <p className="pdf-local-note">
-          Your files are processed locally and never uploaded anywhere.
+          Your files are processed in your browser and never uploaded anywhere.
         </p>
       </div>
     </ToolPage>
