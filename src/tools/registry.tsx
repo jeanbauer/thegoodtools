@@ -44,6 +44,13 @@ const definitions: ToolDefinition[] = [
     icon: '📄',
     load: () => import('./pdf-split-merge'),
   },
+  {
+    id: 'favicon-studio',
+    name: 'Favicon Studio',
+    tagline: 'Draw a pixel-art favicon and preview it live in this tab.',
+    icon: '🎨',
+    load: () => import('./favicon-studio'),
+  },
   // Add the next tool here — folder + entry, that's the whole ritual.
 ]
 
