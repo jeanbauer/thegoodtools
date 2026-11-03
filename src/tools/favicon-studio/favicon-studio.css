@@ -86,7 +86,7 @@
 
 .fav-canvas-frame {
   width: 100%;
-  max-width: 768px;
+  max-width: 576px;
   justify-self: center;
   aspect-ratio: 1;
   border: 1px solid var(--color-border);
