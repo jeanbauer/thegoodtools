@@ -26,5 +26,6 @@
     "oxlint": "^1.89.0",
     "typescript": "~7.0.2",
     "vite": "^8.3.5"
-  }
+  },
+  "license": "PolyForm-Noncommercial-1.0.0"
 }

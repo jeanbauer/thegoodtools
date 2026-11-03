@@ -45,3 +45,10 @@ npm run build     # type-check + production build to dist/
 Push to `main` deploys automatically via GitHub Actions
 (`.github/workflows/deploy.yml`). One-time setup: in the repo's
 Settings → Pages, set Source to "GitHub Actions".
+
+## License
+
+[PolyForm Noncommercial 1.0.0](LICENSE) — free to use, fork, and modify for
+personal and non-commercial purposes. Commercial use (e.g. reselling a copy)
+requires a separate license. Note this is a source-available license, not an
+OSI-approved open-source one — that's the price of the no-commercial clause.
