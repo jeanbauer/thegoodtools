@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router-dom'
+import { PaletteSwitcher } from './PaletteSwitcher'
 
 export function Layout() {
   return (
@@ -13,6 +14,7 @@ export function Layout() {
               thegoodtools<span className="brand-dot">.</span>
             </span>
           </Link>
+          <PaletteSwitcher />
         </div>
       </header>
       <main className="shell-main">
@@ -21,7 +23,9 @@ export function Layout() {
       <footer className="shell-footer">
         <div className="shell-footer-inner">
           <span>thegoodtools inc</span>
-          <span>small tools that just work — free, fast, no sign-up</span>
+          <span>
+            small tools that just work — <Link to="/privacy">privacy</Link>
+          </span>
         </div>
       </footer>
     </>

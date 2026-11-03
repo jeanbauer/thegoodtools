@@ -1,6 +1,24 @@
 import { Link } from 'react-router-dom'
 import { tools } from '../tools/registry'
 
+const privacyPoints = [
+  {
+    icon: '🚪',
+    title: 'No sign-up, ever',
+    text: "There's no account to create — we wouldn't know what to do with one.",
+  },
+  {
+    icon: '🏠',
+    title: 'Your data stays home',
+    text: 'Every tool runs entirely in your browser. Text you paste and files you drop never touch a server.',
+  },
+  {
+    icon: '🧹',
+    title: 'Nothing is stored',
+    text: 'No databases, no logs of your content. Close the tab and it’s like you were never here.',
+  },
+]
+
 export function Home() {
   return (
     <>
@@ -9,9 +27,26 @@ export function Home() {
           Small tools that <em>just work</em>.
         </h1>
         <p>
-          A growing collection of fast, free utilities. No sign-up, no
-          uploads to a server — everything runs in your browser.
+          A growing collection of fast, free utilities that run entirely in
+          your browser — no sign-up, no uploads, nothing stored.
         </p>
+      </section>
+
+      <section className="privacy-strip" aria-label="Privacy promises">
+        {privacyPoints.map((point) => (
+          <div key={point.title} className="privacy-point">
+            <span className="privacy-icon" aria-hidden>
+              {point.icon}
+            </span>
+            <div>
+              <h2>{point.title}</h2>
+              <p>{point.text}</p>
+            </div>
+          </div>
+        ))}
+        <Link to="/privacy" className="privacy-more">
+          The full privacy story →
+        </Link>
       </section>
 
       {tools.length === 0 ? (

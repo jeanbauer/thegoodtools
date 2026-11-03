@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 import { Layout } from './shell/Layout'
 import { Home } from './pages/Home'
+import { Privacy } from './pages/Privacy'
 import { tools } from './tools/registry'
 
 function NotFound() {
@@ -19,6 +20,7 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="/privacy" element={<Privacy />} />
         {tools.map((tool) => (
           <Route
             key={tool.id}

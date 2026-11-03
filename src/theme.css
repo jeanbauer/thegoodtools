@@ -56,3 +56,56 @@
     color-scheme: dark;
   }
 }
+
+/* ------------------------------------------------------------------
+ * TEMPORARY: palette previews for brand evaluation.
+ * The header switcher sets data-palette on <html>; these override the
+ * chosen direction (Safety Orange) live. Remove this block and the
+ * PaletteSwitcher once the brand is settled.
+ * ------------------------------------------------------------------ */
+
+[data-palette='coral'] {
+  --color-bg: #fdf8f6;
+  --color-surface: #ffffff;
+  --color-ink: #221514;
+  --color-muted: #7d6660;
+  --color-border: #f0ddd7;
+  --color-accent: #f04438;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #ffeceb;
+}
+
+[data-palette='amber'] {
+  --color-bg: #fdfaf2;
+  --color-surface: #ffffff;
+  --color-ink: #201a08;
+  --color-muted: #7a6f52;
+  --color-border: #ece2c8;
+  --color-accent: #ffb020;
+  --color-accent-ink: #2a1d00;
+  --color-accent-soft: #fff3d9;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-palette='coral'] {
+    --color-bg: #181110;
+    --color-surface: #221816;
+    --color-ink: #f6ecea;
+    --color-muted: #b39e97;
+    --color-border: #3a2a26;
+    --color-accent: #ff6a5a;
+    --color-accent-ink: #2a0d08;
+    --color-accent-soft: #2e1714;
+  }
+
+  [data-palette='amber'] {
+    --color-bg: #16120a;
+    --color-surface: #221b10;
+    --color-ink: #f5eedd;
+    --color-muted: #b0a37f;
+    --color-border: #3b3220;
+    --color-accent: #ffb020;
+    --color-accent-ink: #2a1d00;
+    --color-accent-soft: #2e2410;
+  }
+}
