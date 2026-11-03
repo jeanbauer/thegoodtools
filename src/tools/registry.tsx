@@ -51,6 +51,13 @@ const definitions: ToolDefinition[] = [
     icon: '🎨',
     load: () => import('./favicon-studio'),
   },
+  {
+    id: 'guid-hilo',
+    name: 'GUID Hi-Lo Converter',
+    tagline: 'GUID ↔ the hi/lo int64 pair your gRPC service expects.',
+    icon: '🔄',
+    load: () => import('./guid-hilo'),
+  },
   // Add the next tool here — folder + entry, that's the whole ritual.
 ]
 

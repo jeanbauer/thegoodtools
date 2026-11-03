@@ -1,0 +1,113 @@
+/* GUID Hi-Lo Converter — scoped styles */
+
+.guid-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 640px;
+}
+
+.guid-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.guid-panel h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.guid-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.guid-field > label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.guid-input {
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.guid-input:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+.guid-hilo-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 560px) {
+  .guid-hilo-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.guid-output {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.guid-output code {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.guid-copy {
+  flex: none;
+  padding: 5px 12px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-muted);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.guid-copy:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.guid-note {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--color-muted);
+}
+
+.guid-note code {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
