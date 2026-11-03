@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# existing apps awaiting migration (added back when migrated)
+apps-to-migrate/
